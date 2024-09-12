@@ -1,0 +1,37 @@
+<form [formGroup]="contactForm" (ngSubmit)="onSubmit()">
+  <mat-form-field>
+    <input matInput placeholder="Name" formControlName="name" [required]="true">
+    <mat-error *ngIf="contactForm.get('name')?.invalid">Name is required</mat-error>
+  </mat-form-field>
+
+  <mat-form-field>
+    <input matInput placeholder="Phone Number" formControlName="phoneNumber" [required]="true">
+    <mat-error *ngIf="contactForm.get('phoneNumber')?.invalid">Invalid phone number</mat-error>
+  </mat-form-field>
+
+  <mat-form-field>
+    <input matInput placeholder="Email" formControlName="email" [required]="true">
+    <mat-error *ngIf="contactForm.get('email')?.invalid">Invalid email</mat-error>
+  </mat-form-field>
+
+  <div formArrayName="addresses">
+    <div *ngFor="let address of addresses.controls; let i = index">
+      <mat-form-field>
+        <input matInput placeholder="Address {{i + 1}}" [formControlName]="i">
+      </mat-form-field>
+      <button mat-button type="button" (click)="removeAddress(i)">Remove</button>
+    </div>
+  </div>
+
+  <button mat-button type="button" (click)="addAddress()">Add Address</button>
+
+  <mat-form-field>
+    <input matInput placeholder="Longitude" formControlName="longitude" [disabled]="true">
+  </mat-form-field>
+
+  <mat-form-field>
+    <input matInput placeholder="Latitude" formControlName="latitude" [disabled]="true">
+  </mat-form-field>
+
+  <button mat-raised-button color="primary" type="submit" [disabled]="contactForm.invalid">Submit</button>
+</form>
